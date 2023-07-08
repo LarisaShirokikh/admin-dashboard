@@ -13,14 +13,25 @@ export function MainNav({
 
     const routes = [
         {
+            href: `/${params.storeId}`,
+            label: 'Обзор',
+            active: pathname === `/${params.storeId}`,
+        },
+        {
             href: `/${params.storeId}/settings`,
-            label: 'Settings',
+            label: 'Настройки',
             active: pathname === `/${params.storeId}/settings`,
+        },
+        {
+            href: `/${params.storeId}/billboards`,
+            label: 'Billboards',
+            active: pathname === `/${params.storeId}/billboards`,
         }
     ];
     return (
         <nav className={cn('flex items-center space-x-4 lg:space-x-6', className)}
         >
+
 
             {routes.map((route) => (
                 <Link
