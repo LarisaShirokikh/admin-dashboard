@@ -2,15 +2,16 @@
 
 import * as z from "zod"
 import axios from "axios"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { Button } from "@/components/ui/button"
-import { Heading } from "@/components/ui/heading"
-import { Separator } from "@/components/ui/separator"
-import { Billboard } from "@prisma/client"
-import { Trash } from "lucide-react"
-import { useForm } from "react-hook-form"
 import { useState } from "react"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import { toast } from "react-hot-toast"
+import { Trash } from "lucide-react"
+import { Billboard } from "@prisma/client"
+import { useParams, useRouter } from "next/navigation"
 
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
 import {
     Form,
     FormControl,
@@ -19,9 +20,9 @@ import {
     FormLabel,
     FormMessage
 } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { toast } from "react-hot-toast"
-import { useParams, useRouter } from "next/navigation"
+import { Separator } from "@/components/ui/separator"
+import { Heading } from "@/components/ui/heading"
+
 import { AlertModal } from "@/components/modals/alert-modal"
 import ImageUpload from "@/components/ui/image-upload"
 
@@ -71,7 +72,7 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
                 await axios.post(`/api/${params.storeId}/billboards`, data);
             }
             router.refresh();
-            //router.push(`${params.storeId}/billboards`);
+            router.push(`${params.storeId}/billboards`);
             toast.success(toastMessage);
         } catch (error) {
             toast.error('Какая-то ошибка..')
@@ -140,7 +141,7 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
                             </FormItem>
                         )}
                     />
-                    <div className="grid grid-cols-3 gap-8">
+                    <div className="md:grid md:grid-cols-3 gap-8">
                         <FormField
                             control={form.control}
                             name='label'
@@ -160,7 +161,7 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
                     </Button>
                 </form>
             </Form>
-            <Separator />
+
         </>
     )
 

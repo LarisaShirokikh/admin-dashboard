@@ -2,6 +2,70 @@ import prismadb from "@/lib/prismadb";
 import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 
+export async function GET(
+    req: Request,
+    { params }: { params: { billboardId: string } }
+) {
+    try {
+
+        if (!params.billboardId) {
+            return new NextResponse('Billboard id is required', { status: 400 });
+        }
+
+        const billboard = await prismadb.billboard.findUnique({
+            where: {
+                id: params.billboardId,
+            }
+        });
+
+        return NextResponse.json(billboard);
+
+
+    } catch (error) {
+        console.log(`[BILLBOARD_GET]`, error);
+        return new NextResponse('Interal error', { status: 500 });
+    }
+}
+
+export async function DELETE(
+    req: Request,
+    { params }: { params: { storeId: string, billboardId: string } }
+) {
+    try {
+        const { userId } = auth()
+
+        if (!userId) {
+            return new NextResponse('Unauthorized', { status: 401 });
+        }
+
+        if (!params.billboardId) {
+            return new NextResponse('Billboard id is required', { status: 400 });
+        }
+
+        const storeByUserId = await prismadb.store.findFirst({
+            where: {
+                id: params.storeId,
+                userId
+            }
+        });
+        if (!storeByUserId) {
+            return new NextResponse('Unauthorized', { status: 405 });
+        }
+
+        const billboard = await prismadb.billboard.deleteMany({
+            where: {
+                id: params.billboardId
+            },
+        });
+        return NextResponse.json(billboard);
+
+
+    } catch (error) {
+        console.log(`[BILLBOARD_DELETE]`, error);
+        return new NextResponse('Interal error', { status: 500 });
+    }
+}
+
 export async function PATCH(
     req: Request,
     { params }: { params: { storeId: string, billboardId: string } }
@@ -28,7 +92,7 @@ export async function PATCH(
             return new NextResponse('Billboard id is required', { status: 400 });
         }
 
-        
+
         const storeByUserId = await prismadb.store.findFirst({
             where: {
                 id: params.storeId,
@@ -43,7 +107,7 @@ export async function PATCH(
         const billboard = await prismadb.billboard.update({
             where: {
                 id: params.billboardId,
-                
+
             },
             data: {
                 label,
@@ -59,32 +123,3 @@ export async function PATCH(
     }
 }
 
-export async function DELETE(
-    req: Request,
-    { params }: { params: { storeId: string } }
-) {
-    try {
-        const { userId } = auth()
-
-        if (!userId) {
-            return new NextResponse('Unauthorized', { status: 401 });
-        }
-
-        if (!params.storeId) {
-            return new NextResponse('Store id is required', { status: 400 });
-        }
-
-        const store = await prismadb.store.deleteMany({
-            where: {
-                id: params.storeId,
-                userId
-            },
-        });
-        return NextResponse.json(store);
-
-
-    } catch (error) {
-        console.log(`[STORE_DELETE]`, error);
-        return new NextResponse('Interal error', { status: 500 });
-    }
-}

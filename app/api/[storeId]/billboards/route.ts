@@ -67,7 +67,6 @@ export async function GET(
 
         const billboard = await prismadb.billboard.findMany({
             where: {
-
                 storeId: params.storeId
             }
         });
