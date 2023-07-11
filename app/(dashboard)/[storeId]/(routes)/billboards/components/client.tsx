@@ -5,13 +5,14 @@ import { Button } from "@/components/ui/button"
 import { Heading } from "@/components/ui/heading"
 import { Separator } from "@/components/ui/separator"
 import { Plus } from "lucide-react"
-import { Billboard } from "@prisma/client"
 import React from "react"
+import { BillboardColumn, columns } from "./columns"
+import { DataTable } from "@/components/ui/data-table"
 
 
 
 interface BillboardClientProps {
-    data: Billboard[]
+    data: BillboardColumn[]
 }
 
 
@@ -36,6 +37,7 @@ export const BillboardClient: React.FC<BillboardClientProps> = ({
                 </Button>
             </div>
             <Separator />
+            <DataTable searchKey="label" columns={columns} data={data} />
         </>
     )
 }
