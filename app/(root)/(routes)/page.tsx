@@ -1,8 +1,8 @@
 "use client"
 
+import { useEffect } from "react"
 import { useStoreModel } from "@/hooks/use-store-modal"
 
-import { useEffect } from "react"
 
 const SetupPage = () => {
     const onOpen = useStoreModel((state) => state.onOpen);

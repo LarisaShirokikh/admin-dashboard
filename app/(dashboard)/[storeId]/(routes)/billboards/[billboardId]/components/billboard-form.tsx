@@ -50,10 +50,10 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
 
-    const title = initialData ? "Edit billboard" : "Create billboard";
-    const description = initialData ? "Edit  a billboard" : "Add a new billboard";
-    const toastMessage = initialData ? "Billboard updated" : "Billboard created";
-    const action = initialData ? "Save changes" : "Create ";
+    const title = initialData ? "Изменить баннер" : "Создать баннер";
+    const description = initialData ? "Изменить баннер" : "Добавить новый баннер";
+    const toastMessage = initialData ? "Баннер изменен" : "Баннер создан";
+    const action = initialData ? "Сохранить изменения" : "Создать";
 
     const form = useForm<BillboardFormValues>({
         resolver: zodResolver(formSchema),
@@ -72,7 +72,7 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
                 await axios.post(`/api/${params.storeId}/billboards`, data);
             }
             router.refresh();
-            router.push(`${params.storeId}/billboards`);
+            router.push(`/${params.storeId}/billboards`);
             toast.success(toastMessage);
         } catch (error) {
             toast.error('Какая-то ошибка..')
@@ -86,10 +86,10 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
             setLoading(true)
             await axios.delete(`/api/${params.storeId}/billboards/${params.billboardId}`);
             router.refresh();
-            router.push(`${params.storeId}/billboards`)
+            router.push(`/${params.storeId}/billboards`)
             toast.success('Billboard удален.')
         } catch (error) {
-            toast.error('Вы уверены, что хотите удалить?')
+            toast.error('Сначала убедитесь, что вы удалили все категории, используя этот рекламный щит.?')
         } finally {
             setLoading(false)
             setOpen(false)
@@ -149,7 +149,7 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
                                 <FormItem>
                                     <FormLabel>Lable</FormLabel>
                                     <FormControl>
-                                        <Input disabled={loading} placeholder="Billboard label" {...field} />
+                                        <Input disabled={loading} placeholder="Этикетка рекламного щита" {...field} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
