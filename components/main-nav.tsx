@@ -18,6 +18,11 @@ export function MainNav({
             active: pathname === `/${params.storeId}`,
         },
         {
+            href: `/${params.storeId}/categories`,
+            label: 'Категории',
+            active: pathname === `/${params.storeId}/categories`,
+        },
+        {
             href: `/${params.storeId}/settings`,
             label: 'Настройки',
             active: pathname === `/${params.storeId}/settings`,
