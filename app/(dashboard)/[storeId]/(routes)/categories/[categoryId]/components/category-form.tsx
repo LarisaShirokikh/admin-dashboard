@@ -91,7 +91,7 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
             router.push(`/${params.storeId}/categories`)
             toast.success('Категория удалена.')
         } catch (error) {
-            toast.error('Сначала убедитесь, что вы удалили все подкатегории, использующие эту категорию?')
+            toast.error('Сначала убедитесь, что вы удалили все продукты, использующие эту категорию?')
         } finally {
             setLoading(false)
             setOpen(false)
@@ -128,9 +128,9 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
                             name='name'
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Name</FormLabel>
+                                    <FormLabel>Название</FormLabel>
                                     <FormControl>
-                                        <Input disabled={loading} placeholder="Имя категории" {...field} />
+                                        <Input disabled={loading} placeholder="Название категории" {...field} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -141,16 +141,26 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
                             name='billboardId'
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Billboard</FormLabel>
-                                    <Select disabled={loading} onValueChange={field.onChange} value={field.value} defaultValue={field.value}>
+                                    <FormLabel>Баннер</FormLabel>
+                                    <Select
+                                        disabled={loading}
+                                        onValueChange={field.onChange}
+                                        value={field.value}
+                                        defaultValue={field.value}>
                                         <FormControl>
                                             <SelectTrigger>
-                                                <SelectValue defaultValue={field.value} placeholder="Выбрать баннер" />
+                                                <SelectValue
+                                                    defaultValue={field.value}
+                                                    placeholder="Выбрать баннер" />
                                             </SelectTrigger>
                                         </FormControl>
                                         <SelectContent>
                                             {billboards.map((billboard) => (
-                                                <SelectItem key={billboard.id} value={billboard.id}>{billboard.label}</SelectItem>
+                                                <SelectItem
+                                                    key={billboard.id}
+                                                    value={billboard.id}>
+                                                        {billboard.label}
+                                                        </SelectItem>
                                             ))}
                                         </SelectContent>
                                     </Select>
