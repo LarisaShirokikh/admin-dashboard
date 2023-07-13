@@ -28,8 +28,13 @@ export function MainNav({
             active: pathname === `/${params.storeId}/settings`,
         },
         {
+            href: `/${params.storeId}/sizes`,
+            label: 'Размеры',
+            active: pathname === `/${params.storeId}/sizes`,
+        },
+        {
             href: `/${params.storeId}/billboards`,
-            label: 'Billboards',
+            label: 'Баннеры',
             active: pathname === `/${params.storeId}/billboards`,
         }
     ];
