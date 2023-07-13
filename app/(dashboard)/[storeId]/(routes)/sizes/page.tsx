@@ -1,8 +1,10 @@
 
-import prismadb from '@/lib/prismadb'
 import { format } from 'date-fns';
+
+import prismadb from '@/lib/prismadb'
+
 import { SizeColumn } from './components/columns';
-import { SizeClient } from './components/client';
+import { SizesClient } from './components/client';
 
 const SizesPage = async ({
     params
@@ -28,7 +30,7 @@ const SizesPage = async ({
     return (
         <div className='flex-col'>
             <div className='flex-1 space-y-4 p-8 pt-6'>
-                <SizeClient data={formattedSizes} />
+                <SizesClient data={formattedSizes} />
             </div>
         </div>
     )

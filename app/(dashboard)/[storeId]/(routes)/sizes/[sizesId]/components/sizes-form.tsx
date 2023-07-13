@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { toast } from "react-hot-toast"
 import { Trash } from "lucide-react"
-import { Billboard, Size } from "@prisma/client"
+import { Size } from "@prisma/client"
 import { useParams, useRouter } from "next/navigation"
 
 import { Input } from "@/components/ui/input"
@@ -24,7 +24,6 @@ import { Separator } from "@/components/ui/separator"
 import { Heading } from "@/components/ui/heading"
 
 import { AlertModal } from "@/components/modals/alert-modal"
-import ImageUpload from "@/components/ui/image-upload"
 
 
 
@@ -58,8 +57,7 @@ export const SizeForm: React.FC<SizeFormProps> = ({
     const form = useForm<SizeFormValues>({
         resolver: zodResolver(formSchema),
         defaultValues: initialData || {
-            name: '',
-            value: ''
+            name: ''
         }
     });
 
@@ -131,9 +129,7 @@ export const SizeForm: React.FC<SizeFormProps> = ({
                                 <FormItem>
                                     <FormLabel>Name</FormLabel>
                                     <FormControl>
-                                        <Input
-
-                                            disabled={loading}
+                                        <Input disabled={loading}
                                             placeholder="Название размера" {...field}
                                         />
                                     </FormControl>
@@ -160,8 +156,6 @@ export const SizeForm: React.FC<SizeFormProps> = ({
                     </Button>
                 </form>
             </Form>
-
         </>
     )
-
 }
