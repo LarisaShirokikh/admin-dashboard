@@ -2,10 +2,15 @@
 
 import axios from 'axios'
 import { Copy, Edit, MoreHorizontal, Trash } from "lucide-react";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuLabel, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { 
+    DropdownMenu, 
+    DropdownMenuContent, 
+    DropdownMenuLabel, 
+    DropdownMenuTrigger,
+    DropdownMenuItem
+} from "@/components/ui/dropdown-menu";
 import { BillboardColumn } from "./columns"
 import { Button } from "@/components/ui/button";
-import { DropdownMenuItem } from "@radix-ui/react-dropdown-menu";
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from 'react-hot-toast';

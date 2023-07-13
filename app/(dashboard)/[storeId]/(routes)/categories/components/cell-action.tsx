@@ -1,15 +1,22 @@
 "use client"
 
 import axios from 'axios'
-import { Copy, Edit, MoreHorizontal, Trash } from "lucide-react";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuLabel, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import {  CategoryColumn } from "./columns"
-import { Button } from "@/components/ui/button";
-import { DropdownMenuItem } from "@radix-ui/react-dropdown-menu";
-import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
-import toast from 'react-hot-toast';
+import { Copy, Edit, MoreHorizontal, Trash } from "lucide-react";
+import { toast } from 'react-hot-toast';
+import { useParams, useRouter } from "next/navigation";
+
+import { Button } from "@/components/ui/button";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuLabel,
+    DropdownMenuTrigger,
+    DropdownMenuItem
+} from "@/components/ui/dropdown-menu";
 import { AlertModal } from '@/components/modals/alert-modal';
+
+import { CategoryColumn } from "./columns"
 
 
 interface CellActionProps {
@@ -27,11 +34,11 @@ export const CellAction: React.FC<CellActionProps> = ({
     const onConfirm = async () => {
         try {
             setLoading(true);
-            await axios.delete(`/api/${params.storeId}/category/${data.id}`);
+            await axios.delete(`/api/${params.storeId}/categories/${data.id}`);
             toast.success('Категория удалена');
             router.refresh();
         } catch (error) {
-            toast.error('Убедитесь, что вы удалили все подкатегории, используя эту категорию.');
+            toast.error('Убедитесь, что вы удалили все продукты, использующие эту категорию.');
         } finally {
             setOpen(false);
             setLoading(false);
