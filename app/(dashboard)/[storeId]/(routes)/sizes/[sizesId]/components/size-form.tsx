@@ -87,7 +87,7 @@ export const SizeForm: React.FC<SizeFormProps> = ({
             router.push(`/${params.storeId}/sizes`)
             toast.success('Размер удален.')
         } catch (error) {
-            toast.error('Убедитесь, что все категории для этого размера удалены?')
+            toast.error('Сначала убедитесь, что вы удалили все продукты, использующие этот размер.?')
         } finally {
             setLoading(false)
             setOpen(false)
@@ -127,11 +127,9 @@ export const SizeForm: React.FC<SizeFormProps> = ({
                             name='name'
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Name</FormLabel>
+                                    <FormLabel>Название</FormLabel>
                                     <FormControl>
-                                        <Input disabled={loading}
-                                            placeholder="Название размера" {...field}
-                                        />
+                                        <Input disabled={loading} placeholder="Название размера" {...field} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -144,7 +142,7 @@ export const SizeForm: React.FC<SizeFormProps> = ({
                                 <FormItem>
                                     <FormLabel>Значение</FormLabel>
                                     <FormControl>
-                                        <Input disabled={loading} placeholder="Размер" {...field} />
+                                        <Input disabled={loading} placeholder="Название размера" {...field} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -156,6 +154,8 @@ export const SizeForm: React.FC<SizeFormProps> = ({
                     </Button>
                 </form>
             </Form>
+
         </>
     )
+
 }

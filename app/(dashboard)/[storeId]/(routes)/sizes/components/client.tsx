@@ -1,15 +1,14 @@
 "use client"
-
-import { Plus } from "lucide-react"
 import { useParams, useRouter } from "next/navigation"
 
 import { Button } from "@/components/ui/button"
-import { DataTable } from "@/components/ui/data-table"
 import { Heading } from "@/components/ui/heading"
 import { Separator } from "@/components/ui/separator"
-import { ApiList } from "@/components/ui/api-list"
-
+import { Plus } from "lucide-react"
+import React from "react"
 import { SizeColumn, columns } from "./columns"
+import { DataTable } from "@/components/ui/data-table"
+import { ApiList } from "@/components/ui/api-list"
 
 
 
@@ -19,7 +18,7 @@ interface SizesClientProps {
 
 
 
-export const SizesClient: React.FC<SizesClientProps> = ({
+export const SizeClient: React.FC<SizesClientProps> = ({
     data
 }) => {
 
@@ -29,16 +28,13 @@ export const SizesClient: React.FC<SizesClientProps> = ({
     return (
         <>
             <div className="flex items-center justify-between">
-                <Heading title={`Sizes (${data.length})`}
-                    description="Управление размерами в Ваших продуктах"
-                />
+                <Heading title={`Размеры (${data.length})`} description="Управление размерами" />
                 <Button onClick={() => router.push(`/${params.storeId}/sizes/new`)}>
-                    <Plus className="mr-2 h-4 w-4" />Создать
-                </Button>
+                    <Plus className="mr-2 h-4 w-4" />Добавить новый</Button>
             </div>
             <Separator />
             <DataTable searchKey="name" columns={columns} data={data} />
-            <Heading title="API" description="API calls for Sizes" />
+            <Heading title="API" description="API calls for Размеров" />
             <Separator />
             <ApiList entityName="sizes" entityIdName="sizeId" />
         </>

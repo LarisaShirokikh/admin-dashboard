@@ -1,21 +1,20 @@
 "use client"
 
 import axios from 'axios'
-import { useState } from "react";
 import { Copy, Edit, MoreHorizontal, Trash } from "lucide-react";
-import toast from 'react-hot-toast';
-import { useParams, useRouter } from "next/navigation";
-
-import { Button } from "@/components/ui/button";
-import { 
-    DropdownMenu, 
-    DropdownMenuContent, 
-    DropdownMenuItem,
-    DropdownMenuLabel, 
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuLabel,
     DropdownMenuTrigger,
+    DropdownMenuItem
 } from "@/components/ui/dropdown-menu";
+import { SizeColumn } from "./columns"
+import { Button } from "@/components/ui/button";
+import { useParams, useRouter } from "next/navigation";
+import { useState } from "react";
+import toast from 'react-hot-toast';
 import { AlertModal } from '@/components/modals/alert-modal';
-import { SizeColumn } from './columns';
 
 
 interface CellActionProps {
@@ -34,10 +33,10 @@ export const CellAction: React.FC<CellActionProps> = ({
         try {
             setLoading(true);
             await axios.delete(`/api/${params.storeId}/sizes/${data.id}`);
-            toast.success('Размер удален');
+            toast.success('Размер удален.');
             router.refresh();
         } catch (error) {
-            toast.error('Убедитесь что все категории для этого размера удалены');
+            toast.error('Убедитесь, что все другие продукты для этого размера удалены');
         } finally {
             setOpen(false);
             setLoading(false);
