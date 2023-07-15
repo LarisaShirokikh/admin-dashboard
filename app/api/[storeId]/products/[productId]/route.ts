@@ -19,7 +19,6 @@ export async function GET(
             include: {
                 images: true,
                 category: true,
-                size: true,
                 color: true,
             }
         });
@@ -85,7 +84,6 @@ export async function PATCH(
             price,
             categoryId,
             colorId,
-            sizeId,
             images,
             isFeatured,
             isArchived
@@ -105,9 +103,6 @@ export async function PATCH(
         if (!categoryId) {
             return new NextResponse('Category required', { status: 400 });
         }
-        if (!sizeId) {
-            return new NextResponse('Size ID is required', { status: 400 });
-        }
         if (!colorId) {
             return new NextResponse('Color ID is required', { status: 400 });
         }
@@ -116,7 +111,7 @@ export async function PATCH(
         }
 
         if (!params.productId) {
-            return new NextResponse('Billboard id is required', { status: 400 });
+            return new NextResponse('Product id is required', { status: 400 });
         }
 
 
@@ -131,7 +126,7 @@ export async function PATCH(
         }
 
 
-         await prismadb.product.update({
+        await prismadb.product.update({
             where: {
                 id: params.productId,
 
@@ -141,7 +136,6 @@ export async function PATCH(
                 price,
                 categoryId,
                 colorId,
-                sizeId,
                 storeId: params.storeId,
                 images: {
                     deleteMany: {}
@@ -159,7 +153,7 @@ export async function PATCH(
                 images: {
                     createMany: {
                         data: [
-                            ...images.map((image: {url: string}) => image)
+                            ...images.map((image: { url: string }) => image)
                         ]
                     }
                 }

@@ -27,11 +27,11 @@ export function MainNav({
             label: 'Настройки',
             active: pathname === `/${params.storeId}/settings`,
         },
-        {
-            href: `/${params.storeId}/sizes`,
-            label: 'Размеры',
-            active: pathname === `/${params.storeId}/sizes`,
-        },
+        // {
+        //     href: `/${params.storeId}/sizes`,
+        //     label: 'Размеры',
+        //     active: pathname === `/${params.storeId}/sizes`,
+        // },
         {
             href: `/${params.storeId}/colors`,
             label: 'Цвета',
