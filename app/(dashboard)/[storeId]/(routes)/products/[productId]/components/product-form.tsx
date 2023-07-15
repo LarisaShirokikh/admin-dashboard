@@ -15,6 +15,7 @@ import { Button } from "@/components/ui/button"
 import {
     Form,
     FormControl,
+    FormDescription,
     FormField,
     FormItem,
     FormLabel,
@@ -72,22 +73,25 @@ export const ProductForm: React.FC<ProductFormProps> = ({
     const toastMessage = initialData ? "продукт изменен" : "продукт создан";
     const action = initialData ? "Сохранить изменения" : "Создать";
 
+
+
+    const defaultValues = initialData ? {
+        ...initialData,
+        price: parseFloat(String(initialData?.price)),
+    } : {
+        name: '',
+        images: [],
+        price: 0,
+        categoryId: '',
+        colorId: '',
+        sizeId: '',
+        isFeatured: false,
+        isArchived: false,
+    }
+
     const form = useForm<ProductFormValues>({
-        resolver: zodResolver(formSchema),
-        defaultValues: initialData ? {
-            ...initialData,
-            price: parseFloat(String(initialData?.price)),
-        } : {
-            name: '',
-            images: [],
-            price: 0,
-            categoryId: '',
-            colorId: '',
-            sizeId: '',
-            isFeatured: false,
-            isArchived: false,
-        }
-    });
+        resolver: zodResolver(formSchema), defaultValues
+    })
 
     const onSubmit = async (data: ProductFormValues) => {
         try {
@@ -115,7 +119,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
             router.push(`/${params.storeId}/products`)
             toast.success('Продукт удален.')
         } catch (error) {
-            toast.error('Сначала убедитесь, что вы удалили все категории, используя этот продукт.')
+            toast.error('Какая-то ошибка')
         } finally {
             setLoading(false)
             setOpen(false)
@@ -196,6 +200,38 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                         />
                         <FormField
                             control={form.control}
+                            name='categoryId'
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Категория</FormLabel>
+                                    <Select
+                                        disabled={loading}
+                                        onValueChange={field.onChange}
+                                        value={field.value}
+                                        defaultValue={field.value}>
+                                        <FormControl>
+                                            <SelectTrigger>
+                                                <SelectValue
+                                                    defaultValue={field.value}
+                                                    placeholder="Выбрать категорию" />
+                                            </SelectTrigger>
+                                        </FormControl>
+                                        <SelectContent>
+                                            {categories.map((category) => (
+                                                <SelectItem
+                                                    key={category.id}
+                                                    value={category.id}>
+                                                    {category.name}
+                                                </SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
                             name='sizeId'
                             render={({ field }) => (
                                 <FormItem>
@@ -227,38 +263,6 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                             )}
                         />
                         <FormField
-                            control={form.control}
-                            name='categoryId'
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Категория</FormLabel>
-                                    <Select
-                                        disabled={loading}
-                                        onValueChange={field.onChange}
-                                        value={field.value}
-                                        defaultValue={field.value}>
-                                        <FormControl>
-                                            <SelectTrigger>
-                                                <SelectValue
-                                                    defaultValue={field.value}
-                                                    placeholder="Выбрать категорию" />
-                                            </SelectTrigger>
-                                        </FormControl>
-                                        <SelectContent>
-                                            {categories.map((category) => (
-                                                <SelectItem
-                                                    key={category.id}
-                                                    value={category.id}>
-                                                    {category.name}
-                                                </SelectItem>
-                                            ))}
-                                        </SelectContent>
-                                    </Select>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                         <FormField
                             control={form.control}
                             name='colorId'
                             render={({ field }) => (
@@ -297,13 +301,41 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                                 <FormItem className="flex-flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
                                     <FormControl>
                                         <Checkbox
-                                        checked={field.value}
-                                        //@ts-ignore
-                                        onCheckedChange={field.onChange}
+                                            checked={field.value}
+                                            //@ts-ignore
+                                            onCheckedChange={field.onChange}
                                         />
                                     </FormControl>
-                                    <div>
-                                        
+                                    <div className="space-y-1 leading-none">
+                                        <FormLabel>
+                                            Избранное
+                                        </FormLabel>
+                                        <FormDescription>
+                                            Этот продукт будет добавлен на домашнюю страницу
+                                        </FormDescription>
+                                    </div>
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name='isArchived'
+                            render={({ field }) => (
+                                <FormItem className="flex-flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+                                    <FormControl>
+                                        <Checkbox
+                                            checked={field.value}
+                                            //@ts-ignore
+                                            onCheckedChange={field.onChange}
+                                        />
+                                    </FormControl>
+                                    <div className="space-y-1 leading-none">
+                                        <FormLabel>
+                                            Архив
+                                        </FormLabel>
+                                        <FormDescription>
+                                            Этот продукт в архиве
+                                        </FormDescription>
                                     </div>
                                 </FormItem>
                             )}
