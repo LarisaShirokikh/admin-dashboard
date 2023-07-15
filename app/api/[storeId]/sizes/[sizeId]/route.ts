@@ -30,7 +30,7 @@ export async function GET(
 
 export async function DELETE(
     req: Request,
-    { params }: { params: { storeId: string, sizeId: string } }
+    { params }: { params: {  sizeId: string, storeId: string } }
 ) {
     try {
         const { userId } = auth()
@@ -53,7 +53,7 @@ export async function DELETE(
             return new NextResponse('Unauthorized', { status: 405 });
         }
 
-        const size = await prismadb.size.deleteMany({
+        const size = await prismadb.size.delete({
             where: {
                 id: params.sizeId
             },
@@ -69,7 +69,7 @@ export async function DELETE(
 
 export async function PATCH(
     req: Request,
-    { params }: { params: { storeId: string, sizeId: string } }
+    { params }: { params: { sizeId: string, storeId: string } }
 ) {
     try {
         const { userId } = auth()
@@ -90,7 +90,7 @@ export async function PATCH(
         }
 
         if (!params.sizeId) {
-            return new NextResponse('Billboard id is required', { status: 400 });
+            return new NextResponse('Size id is required', { status: 400 });
         }
 
 

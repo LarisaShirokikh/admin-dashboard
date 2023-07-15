@@ -26,6 +26,7 @@ import { Heading } from "@/components/ui/heading"
 import { AlertModal } from "@/components/modals/alert-modal"
 import ImageUpload from "@/components/ui/image-upload"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Checkbox } from "@/components/ui/checkbox"
 
 
 
@@ -254,6 +255,56 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                                         </SelectContent>
                                     </Select>
                                     <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                         <FormField
+                            control={form.control}
+                            name='colorId'
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Цвет</FormLabel>
+                                    <Select
+                                        disabled={loading}
+                                        onValueChange={field.onChange}
+                                        value={field.value}
+                                        defaultValue={field.value}>
+                                        <FormControl>
+                                            <SelectTrigger>
+                                                <SelectValue
+                                                    defaultValue={field.value}
+                                                    placeholder="Выбрать цвет" />
+                                            </SelectTrigger>
+                                        </FormControl>
+                                        <SelectContent>
+                                            {colors.map((colors) => (
+                                                <SelectItem
+                                                    key={colors.id}
+                                                    value={colors.id}>
+                                                    {colors.name}
+                                                </SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name='isFeatured'
+                            render={({ field }) => (
+                                <FormItem className="flex-flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+                                    <FormControl>
+                                        <Checkbox
+                                        checked={field.value}
+                                        //@ts-ignore
+                                        onCheckedChange={field.onChange}
+                                        />
+                                    </FormControl>
+                                    <div>
+                                        
+                                    </div>
                                 </FormItem>
                             )}
                         />
